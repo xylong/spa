@@ -3401,12 +3401,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "App"
+  name: "App",
+  data: function data() {
+    return {
+      menu: [{
+        url: '/',
+        name: '首页'
+      }, {
+        url: '/goods',
+        name: '购物车'
+      }]
+    };
+  }
 });
 
 /***/ }),
@@ -85327,22 +85334,14 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("h1", [_vm._v("Vue")]),
-      _vm._v(" "),
       _c(
-        "el-row",
+        "el-container",
         [
-          _c("el-button", [_vm._v("默认按钮")]),
+          _c("el-header", [_vm._v("Header")]),
           _vm._v(" "),
-          _c("el-button", { attrs: { type: "primary" } }, [_vm._v("主要按钮")]),
+          _c("el-main", [_vm._v("Main")]),
           _vm._v(" "),
-          _c("el-button", { attrs: { type: "success" } }, [_vm._v("成功按钮")]),
-          _vm._v(" "),
-          _c("el-button", { attrs: { type: "info" } }, [_vm._v("信息按钮")]),
-          _vm._v(" "),
-          _c("el-button", { attrs: { type: "warning" } }, [_vm._v("警告按钮")]),
-          _vm._v(" "),
-          _c("el-button", { attrs: { type: "danger" } }, [_vm._v("危险按钮")])
+          _c("el-footer", [_vm._v("Footer")])
         ],
         1
       )
@@ -97681,7 +97680,6 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
  */
 
 try {
-  window.Popper = __webpack_require__(/*! popper.js */ "./node_modules/popper.js/dist/esm/popper.js").default;
   window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 
   __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
