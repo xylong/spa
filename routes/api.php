@@ -18,7 +18,6 @@ $api = app('Dingo\Api\Routing\Router');
 $api->version('v1', function ($api) {
     $api->group([
         'namespace'=>'App\Api\V1\Controllers',
-        'middleware' => 'api',
         'prefix' => 'auth',
     ], function ($api) {
         $api->post('login', 'AuthController@login');

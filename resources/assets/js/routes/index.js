@@ -1,7 +1,8 @@
+import Vue from 'vue';
 import Router from 'vue-router';
-
 import Home from '../pages/Home';
-import Goods from '../pages/Goods';
+
+Vue.use(Router);
 
 export default new Router({
     mode: 'history',
@@ -11,9 +12,5 @@ export default new Router({
             path: '/',
             component: Home
         },
-        {
-            path: '/goods',
-            component: Goods
-        }
     ]
 });

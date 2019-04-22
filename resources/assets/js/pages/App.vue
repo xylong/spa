@@ -1,30 +1,25 @@
 <template>
-    <div>
-        <el-container>
-            <el-header>Header</el-header>
-            <el-main>Main</el-main>
-            <el-footer>Footer</el-footer>
-        </el-container>
+    <div id="main">
+        <Header/>
+        <div class="content">
+            <router-view></router-view>
+        </div>
     </div>
 </template>
 
 <script>
+    import Header from '../components/Header';
+
     export default {
-        name: "App",
-        data(){
-            return {
-                menu:[
-                    {
-                        url:'/',
-                        name:'首页'
-                    },
-                    {
-                        url:'/goods',
-                        name:'购物车'
-                    }
-                ]
-            }
+        name: 'App',
+
+        components: {
+            Header
         },
+
+        data() {
+            return {}
+        }
     }
 </script>
 
