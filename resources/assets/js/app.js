@@ -5,6 +5,7 @@ import Vuex from 'vuex';
 import Router from 'vue-router';
 import {routes} from './routes';
 import StoreData from './stores/store';
+import {initialize} from './helpers/general';
 // import ElementUI from 'element-ui';
 // import 'element-ui/lib/theme-chalk/index.css';
 // Vue.use(ElementUI);
@@ -22,18 +23,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store(StoreData);
 
 
-router.beforeEach((to, from, next) => {
-    const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-    const currentUser = store.state.currentUser;
-
-    if (requiresAuth && !currentUser) {
-        next('login');
-    } else if (to.path === '/login' && currentUser) {
-        next('/');
-    } else {
-        next();
-    }
-});
+initialize(store, router);
 
 const app = new Vue({
     el: '#app',

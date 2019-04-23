@@ -7,7 +7,28 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportContent">
                 <ul class="navbar-nav ml-auto">
-                    <a href="/login" class="nav-link">Login</a>
+                    <template v-if="!currentUser">
+                        <li>
+                            <router-link to="/login" class="nav-link">Login</router-link>
+                        </li>
+                        <li>
+                            <router-link to="/register" class="nav-link">Register</router-link>
+                        </li>
+                    </template>
+                    <template v-else>
+                        <li>
+                            <router-link to="/customers" class="nav-link">Customers</router-link>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a id="navbar_dropdown" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-expanded="false" aria-haspopup="true">
+                                {{currentUser.name}} <span class="caret"></span>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a href="#" @click.prevent="logout" class="dropdown-item">Logout</a>
+                            </div>
+                        </li>
+                    </template>
                 </ul>
             </div>
         </div>
@@ -17,6 +38,19 @@
 <script>
     export default {
         name: 'Header',
+
+        methods: {
+            logout() {
+                this.$store.commit('logout');
+                this.$router.push('/login');
+            }
+        },
+
+        computed: {
+            currentUser() {
+                return this.$store.getters.currentUser;
+            }
+        }
     }
 </script>
 

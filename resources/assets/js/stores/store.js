@@ -25,7 +25,7 @@ export default {
             localStorage.setItem('user', JSON.stringify(state.currentUser));
         },
         loginFailed(state, payload) {
-            state.auth_error = payload.error;
+            state.auth_error = payload;
             state.loading = false;
         },
         logout(state) {
