@@ -1,16 +1,18 @@
-import Vue from 'vue';
-import Router from 'vue-router';
 import Home from '../pages/Home';
+import Login from '../components/auth/Login';
 
-Vue.use(Router);
 
-export default new Router({
-    mode: 'history',
+export const routes = [
+    {
+        path: '/',
+        component: Home,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/login',
+        component: Login
+    }
+];
 
-    routes: [
-        {
-            path: '/',
-            component: Home
-        },
-    ]
-});
