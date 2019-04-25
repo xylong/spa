@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,14 +13,19 @@ use Illuminate\Http\Request;
 
 $api = app('Dingo\Api\Routing\Router');
 
-$api->version('v1', function ($api) {
+$api->version('v1', [
+    'namespace' => 'App\Http\Controllers\Api\V1',
+], function ($api) {
     $api->group([
-        'namespace'=>'App\Api\V1\Controllers',
         'prefix' => 'auth',
     ], function ($api) {
         $api->post('login', 'AuthController@login');
         $api->post('logout', 'AuthController@logout');
         $api->post('refresh', 'AuthController@refresh');
         $api->post('me', 'AuthController@me');
+    });
+
+    $api->group(['middleware'=>'jwt.auth'],function ($api){
+        $api->resource('posts','PostsController');
     });
 });

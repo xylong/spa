@@ -9,7 +9,7 @@ export default {
         isLoggedIn: !!user,
         loading: false,
         auth_error: null,
-        customers: []
+        posts: []
     },
     mutations: {
         login(state) {
@@ -32,6 +32,9 @@ export default {
             localStorage.removeItem('user');
             state.isLoggedIn = false;
             state.currentUser = null;
+        },
+        updatePosts(state, payload) {
+            state.posts = payload;
         }
     },
     getters: {
@@ -47,13 +50,23 @@ export default {
         authError(state) {
             return state.auth_error;
         },
-        customers(state) {
-            return state.customers;
+        posts(state) {
+            return state.posts;
         }
     },
     actions: {
         login(context) {
             context.commit('login');
+        },
+        getPosts(context) {
+            axios.get('/api/posts', {
+                headers: {
+                    'Authorization': `Bearer ${context.state.currentUser.token}`
+                }
+            })
+                .then((response) => {
+                    context.commit('updatePosts', response.data.posts);
+                })
         }
     }
 }
