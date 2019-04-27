@@ -1,5 +1,8 @@
 <template>
     <div class="container">
+        <div class="btn-wrapper">
+            <router-link to="/posts/create" class="btn btn-primary btn-sm">New</router-link>
+        </div>
         <table class="table">
             <thead>
             <th>Title</th>
@@ -30,18 +33,21 @@
     export default {
         name: 'List',
 
-        computed:{
-            posts(){
+        computed: {
+            posts() {
                 return this.$store.getters.posts;
             }
         },
 
-        mounted(){
+        mounted() {
             this.$store.dispatch('getPosts');
         }
     }
 </script>
 
 <style scoped>
-
+    .btn-wrapper {
+        text-align: right;
+        margin-bottom: 20px;
+    }
 </style>

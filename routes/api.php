@@ -25,7 +25,5 @@ $api->version('v1', [
         $api->post('me', 'AuthController@me');
     });
 
-    $api->group(['middleware'=>'jwt.auth'],function ($api){
-        $api->resource('posts','PostsController');
-    });
+    $api->resource('posts','PostsController');
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use Auth;
 use Illuminate\Http\Request;
 
 class PostsController extends Controller
@@ -40,7 +41,13 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        $post = Post::create($request->only(['title', 'content']));
+        $post = new Post();
+
+        $post->title = $request->title;
+        $post->content = $request->content;
+        $post->user_id = Auth::guard('api')->id();
+
+        $post->save();
 
         return response()->json([
             'post' => $post

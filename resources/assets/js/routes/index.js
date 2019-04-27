@@ -2,6 +2,8 @@ import Home from '../pages/Home';
 import Login from '../components/auth/Login';
 import PostsMain from '../components/posts/Main';
 import PostsList from '../components/posts/List';
+import PostsCreate from '../components/posts/Create';
+import PostView from '../components/posts/View';
 
 
 export const routes = [
@@ -27,13 +29,14 @@ export const routes = [
                 path: '/',
                 component: PostsList
             },
-            // {
-            //     path: 'new',
-            //     compoent: NewCustomers
-            // }, {
-            //     path: ':id',
-            //     compoent: Customer
-            // }
+            {
+                path: 'create',
+                component: PostsCreate
+            },
+            {
+                path: ':id',
+                component: PostView
+            }
         ]
     }
 ];
