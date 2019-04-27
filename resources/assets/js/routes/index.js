@@ -3,7 +3,7 @@ import Login from '../components/auth/Login';
 import PostsMain from '../components/posts/Main';
 import PostsList from '../components/posts/List';
 import PostsCreate from '../components/posts/Create';
-import PostView from '../components/posts/View';
+import PostShow from '../components/posts/Show';
 
 
 export const routes = [
@@ -35,7 +35,7 @@ export const routes = [
             },
             {
                 path: ':id',
-                component: PostView
+                component: PostShow
             }
         ]
     }
