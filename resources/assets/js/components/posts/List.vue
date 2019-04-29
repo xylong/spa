@@ -20,7 +20,7 @@
                     <td v-text="post.title"></td>
                     <td v-text="post.user.name"></td>
                     <td>
-                        <router-link :to="`/post/${post.id}`">view</router-link>
+                        <router-link :to="`/posts/${post.id}`">view</router-link>
                     </td>
                 </tr>
             </template>
@@ -40,6 +40,9 @@
         },
 
         mounted() {
+            if (this.posts.data) {
+                return;
+            }
             this.$store.dispatch('getPosts');
         }
     }

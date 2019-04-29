@@ -21,6 +21,9 @@
         computed: {
             currentUser() {
                 return this.$store.getters.currentUser;
+            },
+            posts() {
+                return this.$store.getters.posts;
             }
         },
         data() {
@@ -29,13 +32,13 @@
             }
         },
         created() {
-            axios.get(`/api/posts/${this.$route.params.id}`, {
-                headers: {
-                    'Authorization': `Bearer ${this.currentUser.token}`
-                }
-            }).then((response) => {
-                this.post = response.data.post;
-            })
+            if (this.posts.data) {
+                this.post = this.posts.data.find((post) => post.id == this.$route.params.id);
+            } else {
+                axios.get(`/api/posts/${this.$route.params.id}`).then((response) => {
+                    this.post = response.data.post;
+                });
+            }
         }
     }
 </script>

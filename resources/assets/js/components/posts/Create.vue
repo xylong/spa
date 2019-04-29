@@ -110,11 +110,7 @@
                     return;
                 }
 
-                axios.post('/api/posts', this.$data.post,{
-                    headers: {
-                        'Authorization': `Bearer ${this.currentUser.token}`
-                    }
-                })
+                axios.post('/api/posts', this.$data.post)
                     .then((response) => {
                         this.$router.push('/posts');
                     })

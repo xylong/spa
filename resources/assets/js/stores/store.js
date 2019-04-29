@@ -4,7 +4,6 @@ const user = getLocalUser();
 
 export default {
     state: {
-        title: '首页',
         currentUser: user,
         isLoggedIn: !!user,
         loading: false,
@@ -59,11 +58,7 @@ export default {
             context.commit('login');
         },
         getPosts(context) {
-            axios.get('/api/posts', {
-                headers: {
-                    'Authorization': `Bearer ${context.state.currentUser.token}`
-                }
-            })
+            axios.get('/api/posts')
                 .then((response) => {
                     context.commit('updatePosts', response.data.posts);
                 })

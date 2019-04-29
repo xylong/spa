@@ -2033,11 +2033,7 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      axios.post('/api/posts', this.$data.post, {
-        headers: {
-          'Authorization': "Bearer ".concat(this.currentUser.token)
-        }
-      }).then(function (response) {
+      axios.post('/api/posts', this.$data.post).then(function (response) {
         _this.$router.push('/posts');
       });
     },
@@ -2130,6 +2126,10 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
+    if (this.posts.data) {
+      return;
+    }
+
     this.$store.dispatch('getPosts');
   }
 });
@@ -2198,6 +2198,9 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     currentUser: function currentUser() {
       return this.$store.getters.currentUser;
+    },
+    posts: function posts() {
+      return this.$store.getters.posts;
     }
   },
   data: function data() {
@@ -2208,13 +2211,15 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    axios.get("/api/posts/".concat(this.$route.params.id), {
-      headers: {
-        'Authorization': "Bearer ".concat(this.currentUser.token)
-      }
-    }).then(function (response) {
-      _this.post = response.data.post;
-    });
+    if (this.posts.data) {
+      this.post = this.posts.data.find(function (post) {
+        return post.id == _this.$route.params.id;
+      });
+    } else {
+      axios.get("/api/posts/".concat(this.$route.params.id)).then(function (response) {
+        _this.post = response.data.post;
+      });
+    }
   }
 });
 
@@ -77461,9 +77466,11 @@ var render = function() {
                   _c(
                     "td",
                     [
-                      _c("router-link", { attrs: { to: "/post/" + post.id } }, [
-                        _vm._v("view")
-                      ])
+                      _c(
+                        "router-link",
+                        { attrs: { to: "/posts/" + post.id } },
+                        [_vm._v("view")]
+                      )
                     ],
                     1
                   )
@@ -77645,23 +77652,28 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-8" }, [
-        _c("div", { staticClass: "card card-default" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _vm._v(_vm._s(_vm.title))
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _vm._v("\n                    aaa\n                ")
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "container" }, [
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c("div", { staticClass: "col-md-8" }, [
+          _c("div", { staticClass: "card card-default" }, [
+            _c("div", { staticClass: "card-header" }, [_vm._v("首页")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _vm._v("\n                    aaa\n                ")
+            ])
           ])
         ])
       ])
     ])
-  ])
-}
-var staticRenderFns = []
+  }
+]
 render._withStripped = true
 
 
@@ -93226,6 +93238,7 @@ function initialize(store, router) {
 
     return Promise.reject(error);
   });
+  axios.defaults.headers.common['Authorization'] = "Bearer ".concat(store.getters.currentUser.token);
 }
 
 /***/ }),
@@ -93433,7 +93446,6 @@ __webpack_require__.r(__webpack_exports__);
 var user = Object(_helpers_auth__WEBPACK_IMPORTED_MODULE_0__["getLocalUser"])();
 /* harmony default export */ __webpack_exports__["default"] = ({
   state: {
-    title: '首页',
     currentUser: user,
     isLoggedIn: !!user,
     loading: false,
@@ -93489,11 +93501,7 @@ var user = Object(_helpers_auth__WEBPACK_IMPORTED_MODULE_0__["getLocalUser"])();
       context.commit('login');
     },
     getPosts: function getPosts(context) {
-      axios.get('/api/posts', {
-        headers: {
-          'Authorization': "Bearer ".concat(context.state.currentUser.token)
-        }
-      }).then(function (response) {
+      axios.get('/api/posts').then(function (response) {
         context.commit('updatePosts', response.data.posts);
       });
     }
